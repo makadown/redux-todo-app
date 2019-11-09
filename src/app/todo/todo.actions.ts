@@ -1,4 +1,7 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
+import { Todo } from './models/todo.model';
+
+/* import { Action } from '@ngrx/store';
 
 export const AGREGAR_TODO = '[TODO] Agregar todo';
 
@@ -10,4 +13,5 @@ export class AgregarTodoAction implements Action {
     }
 }
 
-export type Acciones = AgregarTodoAction;
+export type Acciones = AgregarTodoAction;*/
+export const agregarTodo = createAction('[TODO] Agregar todo', props<{payload: string}>());

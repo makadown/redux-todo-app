@@ -1,15 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { Store, select } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducers';
+import { agregarTodo } from '../todo.actions';
+import { Todo } from '../models/todo.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todo-add',
   templateUrl: './todo-add.component.html',
   styles: []
 })
-export class TodoAddComponent implements OnInit {
+export class TodoAddComponent implements OnInit, OnDestroy {
+  txtInput: FormControl;
+  suscriptor: Subscription;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private store: Store<AppState>) {
+    this.suscriptor = this.store
+      .pipe(select('todos'))
+      .subscribe((todos: Todo[]) => {
+        console.log(todos);
+      });
   }
 
+  ngOnInit() {
+    this.txtInput = new FormControl('', Validators.required);
+  }
+
+  agregarTodo() {
+    if (!this.txtInput.valid) {
+      return;
+    }
+    this.store.dispatch(agregarTodo({ payload: this.txtInput.value }));
+    /*const accion = new fromTodo.AgregarTodoAction( this.txtInput.value );*/
+  }
+  ngOnDestroy() {
+    if (this.suscriptor) {
+      this.suscriptor.unsubscribe();
+    }
+  }
 }

@@ -1,20 +1,36 @@
-import * as fromTodo from './todo.actions';
+// import * as fromTodo from './todo.actions';
 import { Todo } from './models/todo.model';
+import { createReducer, on } from '@ngrx/store';
+import { agregarTodo } from './todo.actions';
 
-const estadoInicial: Todo[] = []
-
+const estadoInicial: Todo[] = [];
+/*
 export function todoReducer(state = estadoInicial,
     action: fromTodo.Acciones): Todo[] {
         switch(action.type) {
             case fromTodo.AGREGAR_TODO:
                 const todo = new Todo(action.texto);
-                /* Aqui no se hace 
-                  state.push(todo)
-                  porque se estaría mutando el estado por referencia.
-                  JAMAS se podran trackear los cambios en las acciones, 
-                  siempre hay que regresar un nuevo arreglo que sirva de estado. */
                 return [...state, todo];
             default:
                 state;
         }
     }
+    */
+const _todoReducer = createReducer(
+  estadoInicial,
+  /* on(agregarTodo, (state, { payload }) =>  [...state, payload] ) */
+  on(agregarTodo, (state, { payload }) => {
+    const todos: Todo[] = [...state];
+    todos.push(new Todo(payload));
+    return todos;
+  })
+);
+/**
+ * Funcion para reducer. Siguiendo instrucciones de
+ * https://ngrx.io/guide/store
+ * @param state
+ * @param action
+ */
+export function todoReducer(state, action) {
+  return _todoReducer(state, action);
+}
