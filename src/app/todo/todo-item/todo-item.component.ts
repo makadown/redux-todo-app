@@ -14,7 +14,7 @@ export class TodoItemComponent implements OnInit {
   txtInput: FormControl;
   editando = false;
 
-  @ViewChild('txtInputFisico') txtInputFisico: ElementRef;
+  @ViewChild('txtInputFisico', {static: false}) txtInputFisico: ElementRef;
   
   constructor() { }
 

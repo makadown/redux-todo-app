@@ -25,6 +25,6 @@ export class TodoAddComponent implements OnInit {
       return;
     }
     this.store.dispatch(agregarTodo({ payload: this.txtInput.value }));
-    /*const accion = new fromTodo.AgregarTodoAction( this.txtInput.value );*/
+    this.txtInput.setValue( null );
   }
 }
