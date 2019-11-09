@@ -3,7 +3,12 @@ import { Todo } from './models/todo.model';
 import { createReducer, on } from '@ngrx/store';
 import { agregarTodo } from './todo.actions';
 
-const estadoInicial: Todo[] = [];
+// Para inicializar y evitar hacer pruebas manuales.
+const todo1 = new Todo('Vencer a Thanos');
+const todo2 = new Todo('Salvar el mundo');
+const todo3 = new Todo('Pedir prestado el traje a ironman');
+
+const estadoInicial: Todo[] = [todo1, todo2, todo3];
 /*
 export function todoReducer(state = estadoInicial,
     action: fromTodo.Acciones): Todo[] {

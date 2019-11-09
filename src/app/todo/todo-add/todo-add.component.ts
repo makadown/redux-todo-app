@@ -11,17 +11,10 @@ import { Subscription } from 'rxjs';
   templateUrl: './todo-add.component.html',
   styles: []
 })
-export class TodoAddComponent implements OnInit, OnDestroy {
+export class TodoAddComponent implements OnInit {
   txtInput: FormControl;
-  suscriptor: Subscription;
 
-  constructor(private store: Store<AppState>) {
-    this.suscriptor = this.store
-      .pipe(select('todos'))
-      .subscribe((todos: Todo[]) => {
-        console.log(todos);
-      });
-  }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
     this.txtInput = new FormControl('', Validators.required);
@@ -33,10 +26,5 @@ export class TodoAddComponent implements OnInit, OnDestroy {
     }
     this.store.dispatch(agregarTodo({ payload: this.txtInput.value }));
     /*const accion = new fromTodo.AgregarTodoAction( this.txtInput.value );*/
-  }
-  ngOnDestroy() {
-    if (this.suscriptor) {
-      this.suscriptor.unsubscribe();
-    }
   }
 }
