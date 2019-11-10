@@ -1,7 +1,7 @@
 // import * as fromTodo from './todo.actions';
 import { Todo } from './models/todo.model';
 import { createReducer, on } from '@ngrx/store';
-import { agregarTodo } from './todo.actions';
+import { agregarTodo, toggleTodo } from './todo.actions';
 
 // Para inicializar y evitar hacer pruebas manuales.
 const todo1 = new Todo('Vencer a Thanos');
@@ -25,12 +25,29 @@ export function todoReducer(state = estadoInicial,
     */
 const _todoReducer = createReducer(
   estadoInicial,
-  /* on(agregarTodo, (state, { payload }) =>  [...state, payload] ) */
-  on(agregarTodo, (state, { payload }) => {
+  on(agregarTodo, (state, { payload }) => [...state, new Todo(payload)]),
+  /*on(agregarTodo, (state, { payload }) => {
     const todos: Todo[] = [...state];
     todos.push(new Todo(payload));
     return todos;
-  })
+  })*/ on(
+    toggleTodo,
+    (state, { id }) => {
+      return state.map(todoEdit => {
+        if (todoEdit.id === id) {
+          /* Auxiliandome del operador spread regreso un nuevo objeto de tipo Todo,
+          clonando todas las propiedades y modificando explíciamente su propiedad de completado.
+          */
+          return {
+            ...todoEdit,
+            completado: !todoEdit.completado
+          };
+        } else {
+          return todoEdit;
+        }
+      });
+    }
+  )
 );
 /**
  * Funcion para reducer. Siguiendo instrucciones de

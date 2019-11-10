@@ -16,6 +16,7 @@ export class TodosListComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>) {
       this.suscriptor = this.store.subscribe( state => {
         this.todos = state.todos;
+        console.log(this.todos);
       });
   }
 

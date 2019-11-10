@@ -15,3 +15,4 @@ export class AgregarTodoAction implements Action {
 
 export type Acciones = AgregarTodoAction;*/
 export const agregarTodo = createAction('[TODO] Agregar todo', props<{payload: string}>());
+export const toggleTodo = createAction('[TODO] Toggle todo', props<{id: number}>());
