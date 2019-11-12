@@ -11,6 +11,7 @@
     </div>
     <input class="edit" [value]="todo.texto"
             (blur)="terminarEdicion()"
+            (keyup.enter)="terminarEdicion()"
             [formControl]="txtInput"
             #txtInputFisico>
 </li>
