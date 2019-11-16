@@ -17,3 +17,4 @@ export type Acciones = AgregarTodoAction;*/
 export const agregarTodo = createAction('[TODO] Agregar todo', props<{payload: string}>());
 export const toggleTodo = createAction('[TODO] Toggle todo', props<{id: number}>());
 export const editarTodo = createAction('[TODO] Editar todo', props<{id: number, payload: string}>());
+export const borrarTodo = createAction('[TODO] Borrar Todo', props<{id: number}>());

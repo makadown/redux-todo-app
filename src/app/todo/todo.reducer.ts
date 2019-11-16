@@ -1,12 +1,17 @@
 // import * as fromTodo from './todo.actions';
-import { Todo } from './models/todo.model';
-import { createReducer, on } from '@ngrx/store';
-import { agregarTodo, toggleTodo, editarTodo } from './todo.actions';
+import { Todo } from "./models/todo.model";
+import { createReducer, on } from "@ngrx/store";
+import {
+  agregarTodo,
+  toggleTodo,
+  editarTodo,
+  borrarTodo
+} from "./todo.actions";
 
 // Para inicializar y evitar hacer pruebas manuales.
-const todo1 = new Todo('Vencer a Thanos');
-const todo2 = new Todo('Salvar el mundo');
-const todo3 = new Todo('Pedir prestado el traje a ironman');
+const todo1 = new Todo("Vencer a Thanos");
+const todo2 = new Todo("Salvar el mundo");
+const todo3 = new Todo("Pedir prestado el traje a ironman");
 
 todo3.completado = true;
 
@@ -26,39 +31,38 @@ export function todoReducer(state = estadoInicial,
 const _todoReducer = createReducer(
   estadoInicial,
   on(agregarTodo, (state, { payload }) => [...state, new Todo(payload)]),
-  on(
-    toggleTodo,
-    (state, { id }) => {
-      return state.map(todoEdit => {
-        if (todoEdit.id === id) {
-          /* Auxiliandome del operador spread regreso un nuevo objeto de tipo Todo,
+  on(toggleTodo, (state, { id }) => {
+    return state.map(todoEdit => {
+      if (todoEdit.id === id) {
+        /* Auxiliandome del operador spread regreso un nuevo objeto de tipo Todo,
           clonando todas las propiedades y modificando explíciamente su propiedad de completado.
           */
-          return {
-            ...todoEdit,
-            completado: !todoEdit.completado
-          };
-        } else {
-          return todoEdit;
-        }
-      });
-    }
-  ),
-  on(
-    editarTodo,
-    (state, { id, payload }) => {
-      return state.map(todoEdit => {
-        if (todoEdit.id === id) {
-          return {
-            ...todoEdit,
-            texto: payload
-          };
-        } else {
-          return todoEdit;
-        }
-      });
-    }
-  )
+        return {
+          ...todoEdit,
+          completado: !todoEdit.completado
+        };
+      } else {
+        return todoEdit;
+      }
+    });
+  }),
+  on(editarTodo, (state, { id, payload }) => {
+    return state.map(todoEdit => {
+      if (todoEdit.id === id) {
+        return {
+          ...todoEdit,
+          texto: payload
+        };
+      } else {
+        return todoEdit;
+      }
+    });
+  }),
+  on(borrarTodo, (state, { id }) => {
+    /* Tengo que regresar todo el arreglo del estado anterior, excluyendo el del id
+        que voy a borrar */
+        return state.filter(todoEdit => todoEdit.id !== id);
+  })
 );
 /**
  * Funcion para reducer. Siguiendo instrucciones de
