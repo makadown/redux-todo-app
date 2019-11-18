@@ -1,17 +1,18 @@
 // import * as fromTodo from './todo.actions';
-import { Todo } from "./models/todo.model";
-import { createReducer, on } from "@ngrx/store";
+import { Todo } from './models/todo.model';
+import { createReducer, on } from '@ngrx/store';
 import {
   agregarTodo,
   toggleTodo,
   editarTodo,
-  borrarTodo
-} from "./todo.actions";
+  borrarTodo,
+  toggleAllTodo
+} from './todo.actions';
 
 // Para inicializar y evitar hacer pruebas manuales.
-const todo1 = new Todo("Vencer a Thanos");
-const todo2 = new Todo("Salvar el mundo");
-const todo3 = new Todo("Pedir prestado el traje a ironman");
+const todo1 = new Todo('Vencer a Thanos');
+const todo2 = new Todo('Salvar el mundo');
+const todo3 = new Todo('Pedir prestado el traje a ironman');
 
 todo3.completado = true;
 
@@ -46,6 +47,14 @@ const _todoReducer = createReducer(
       }
     });
   }),
+  on(toggleAllTodo, (state, { completado }) => {
+    return state.map(todoEdit => {
+      return {
+        ...todoEdit,
+        completado: completado
+      };
+    });
+  }),
   on(editarTodo, (state, { id, payload }) => {
     return state.map(todoEdit => {
       if (todoEdit.id === id) {
@@ -61,7 +70,7 @@ const _todoReducer = createReducer(
   on(borrarTodo, (state, { id }) => {
     /* Tengo que regresar todo el arreglo del estado anterior, excluyendo el del id
         que voy a borrar */
-        return state.filter(todoEdit => todoEdit.id !== id);
+    return state.filter(todoEdit => todoEdit.id !== id);
   })
 );
 /**

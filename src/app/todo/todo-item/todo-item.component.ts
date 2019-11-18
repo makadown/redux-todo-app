@@ -52,8 +52,6 @@ export class TodoItemComponent implements OnInit {
    * Elimina todo
    */
   borrarTodo() {
-    this.store.dispatch(
-      borrarTodo({ id: this.todo.id })
-    );
+    this.store.dispatch(borrarTodo({ id: this.todo.id }));
   }
 }
