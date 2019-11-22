@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import { filtrosValidos } from "./filtrosValidos";
 import { setFiltro } from "./filter.actions";
+import { filtrosValidos } from './filtrosValidos';
 
 const estadoInicial: filtrosValidos = "todos";
 
