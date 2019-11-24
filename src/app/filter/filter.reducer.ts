@@ -6,8 +6,8 @@ const estadoInicial: filtrosValidos = "todos";
 
 const _filtroReducer = createReducer(
   estadoInicial,
-  on(setFiltro, (state, filtro) => {
-    return filtro? filtro : state;
+  on(setFiltro, (state, filtros) => {
+    return filtros? filtros.filtro : 'todos';
   })
 );
 
