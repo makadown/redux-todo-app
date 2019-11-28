@@ -1,6 +1,7 @@
 // import * as fromTodo from './todo.actions';
 import { Todo } from './models/todo.model';
 import { createReducer, on } from '@ngrx/store';
+import { borrarTodoCompletados } from './todo.actions';
 import {
   agregarTodo,
   toggleTodo,
@@ -71,6 +72,9 @@ const _todoReducer = createReducer(
     /* Tengo que regresar todo el arreglo del estado anterior, excluyendo el del id
         que voy a borrar */
     return state.filter(todoEdit => todoEdit.id !== id);
+  }),
+  on( borrarTodoCompletados, (state) => {
+    return state.filter(todoEdit => !todoEdit.completado );
   })
 );
 /**
